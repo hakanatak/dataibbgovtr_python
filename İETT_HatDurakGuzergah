@@ -1,0 +1,35 @@
+import zeep
+import json
+import geopandas as gpd
+import shapely.wkt
+import requests
+wsdl = 'https://api.ibb.gov.tr/iett/UlasimAnaVeri/HatDurakGuzergah.asmx?wsdl'
+client = zeep.Client(wsdl=wsdl)
+data = client.service.GetDurak_json(DurakKodu="")
+data = json.loads(data)
+
+new_geojson = {
+    'type': 'FeatureCollection',
+    'features': []
+}
+
+for i in data:
+    point = i.get("KOORDINAT")
+    p = shapely.wkt.loads(point)
+    geojson_data = gpd.GeoSeries([p]).__geo_interface__
+    new_geojson["features"].append({'type': 'Feature',
+                                    'properties': {
+                                        'SDURAKKODU': i.get("SDURAKKODU"),
+                                        'SDURAKADI': i.get("SDURAKADI"),
+                                        'ILCEADI' :i.get("ILCEADI"),
+                                        'AKILLI': i.get("AKILLI"),
+                                        'FIZIKI': i.get("FIZIKI"),
+                                        'DURAK_TIPI': i.get("DURAK_TIPI"),
+                                        'SYON': i.get("SYON"),
+                                    },
+                                    'geometry': geojson_data.get("features")[0].get('geometry')
+                                    })
+for j in new_geojson.get('features'):
+    print(j)
+with open('data.geojson', 'w') as json_file:
+ json.dump(new_geojson, json_file)
