@@ -1,3 +1,4 @@
+#HatDurakGuzergah #https://data.ibb.gov.tr/dataset/sefer-gerceklesme-web-servisi
 import zeep
 import json
 import geopandas as gpd
