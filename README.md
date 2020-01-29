@@ -1,2 +1,3 @@
 # İstanbul Büyükşehir Belediyesi açık veri portal API
-data.ibb.gov.tr'de yer alan soap servisinin geojson a dönüştüren python kodu
+Mekansal verilerin görselleştirilmesi ve daha efektif kullanılabilmesi için geliştirdiğim kodları paylaştığım repo
+İstanbul Büyükşehir Belediyesi'nin data.ibb.gov.tr adresinden yayına açtığı İETT hat güzergah API'sinde yer alan soap servisinin geojson a dönüştüren python kodu
